@@ -1,1 +1,1 @@
-curl -d "@data.json" -X POST http://localhost/login
+curl -d "@data.json" -X POST http://localhost:3000/login
