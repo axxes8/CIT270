@@ -1,8 +1,9 @@
 const express = require("express"); //import library
 const bodyParser = require('body-parser'); //This is middleware
-const res = require("express/lib/response");
 const port = 3000;
 const app = express(); //using library
+const md5 = require('md5');
+const hashedPasswordFromUser = md5(req.body.password)
 
 app.use(bodyParser.json()); //use the middleware, (call it before anything eles happens on each request)
 
@@ -14,7 +15,11 @@ app.get('/',(request,response)=>{//Everytime something call the API this is a re
 
 app.post('/login', (request, response)=>{ //A post is when a client sends new info to an API
     const loginRequest = request.body;
-    if (loginRequest.userName=="bob@bob.com" && loginRequest.password=="B0bwashere!"){
+    console.log("Request body", JSON.stringify(request.body));
+    //search database for username and retrieve current passwword
+
+    //comopare hashed version of password that was ent wit the hashed verson from the database
+    if (loginRequest.userName=="bob@bob.com" && loginRequest.password=="ca9143bd31cbec6854a3480d112d53b6"){
         response.status(200); //200 means OK
         response.send("Welcome")
     } else {
