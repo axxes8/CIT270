@@ -3,7 +3,9 @@ const bodyParser = require('body-parser'); //This is middleware
 const port = 3000;
 const app = express(); //using library
 const md5 = require('md5');
-const hashedPasswordFromUser = md5(req.body.password)
+const redis = require('redis');
+
+const redisClient = redis.createClient();
 
 app.use(bodyParser.json()); //use the middleware, (call it before anything eles happens on each request)
 
@@ -13,7 +15,10 @@ app.get('/',(request,response)=>{//Everytime something call the API this is a re
     response.send("Hello") //a response is when the API gives the info requested.
 });
 
-app.post('/login', (request, response)=>{ //A post is when a client sends new info to an API
+app.post('/login', async(request, response)=>{ //A post is when a client sends new info to an API
+    const requestHashedPassword = md5(request.body.password)
+    const redisHashedPassword = await redisClient.hGet("passwords", request.body.userName);
+    
     const loginRequest = request.body;
     console.log("Request body", JSON.stringify(request.body));
     //search database for username and retrieve current passwword
