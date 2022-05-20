@@ -43,4 +43,14 @@ const validatePassword = async(request, response)=>{
     }
 };
 
+const signup = (request, response)=>{
+    await redisClient.connect()
+    const requestUserName = (request.body.username)
+    const requestPassword = md5(request.body.password)
+    const redisSignup = await redisClient.hSet("passwords", requestUserName, requestPassword)
+
+};
+
 app.post('/login', validatePassword)
+
+app.post('/signup', signup)
