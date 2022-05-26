@@ -33,7 +33,7 @@ const validatePassword = async(request, response)=>{
     //search database for username and retrieve current passwword
 //const password = await redisClient.hmGet(request.body.userName)
 
-    //comopare hashed version of password that was ent wit the hashed verson from the database
+    //compare hashed version of password that was sent with the hashed verson from the database
     if (loginRequest.userName=="bob@bob.com" && requestHashedPassword == redisHashedPassword){
         response.status(200); //200 means OK
         response.send("Welcome")
@@ -43,14 +43,14 @@ const validatePassword = async(request, response)=>{
     }
 };
 
-const signup = (request, response)=>{
-    await redisClient.connect()
-    const requestUserName = (request.body.username)
+const savePassword = async (request, response)=>{
+    await redisClient.connect(); // Creating a socket
+    const requestUserName = (request.body.userName)
     const requestPassword = md5(request.body.password)
-    const redisSignup = await redisClient.hSet("passwords", requestUserName, requestPassword)
-
+    await redisClient.hSet("passwords", requestUserName, requestPassword)
+    response.status(200);
+    response.send({result:"Saved"});
 };
 
 app.post('/login', validatePassword)
-
-app.post('/signup', signup)
+app.post('/signup', savePassword)
