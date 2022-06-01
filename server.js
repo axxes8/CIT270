@@ -1,9 +1,11 @@
 const express = require("express"); //import library
+const https = require("https");
 const bodyParser = require('body-parser'); //This is middleware
 const port = 3000;
 const app = express(); //using library
 const md5 = require('md5');
 const {createClient} = require('redis');
+const fs = require("fs")
 
 const redisClient = createClient(
     {
@@ -16,7 +18,16 @@ const redisClient = createClient(
 
 app.use(bodyParser.json()); //use the middleware, (call it before anything else happens on each request)
 
-app.listen(port, ()=>{console.log("listening on port: " + port)});
+// app.listen(port, ()=>{console.log("listening on port: " + port)}); //non https server start
+
+https.createServer({ // https server start
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert'),
+},
+    app).listen(port, async () =>{
+        await redisClient.connect();
+        console.log( "listening on port: " + port)})
+    
 
 app.get('/',(request,response)=>{//Everytime something call the API this is a request
     response.send("Hello") //a response is when the API gives the info requested.
