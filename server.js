@@ -36,7 +36,6 @@ app.get('/',(request,response)=>{//Everytime something call the API this is a re
 
 // Validate the password
 const validatePassword = async(request, response)=>{
-    await redisClient.connect(); // Creating a socket
     const requestHashedPassword = md5(request.body.password)
     const redisHashedPassword = await redisClient.hGet("passwords", request.body.userName);
     const loginRequest = request.body;
@@ -56,7 +55,6 @@ const validatePassword = async(request, response)=>{
 };
 
 const savePassword = async (request, response)=>{
-    await redisClient.connect(); // Creating a socket
     const requestUserName = (request.body.userName)
     const requestPassword = md5(request.body.password)
     await redisClient.hSet("passwords", requestUserName, requestPassword)
