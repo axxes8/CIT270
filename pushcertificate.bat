@@ -1,1 +1,1 @@
-scp ./server.* taylor@35.192.88.164:/tmp 
+scp ./server.* taylor@taylorfrisby.nodejs.cit270.com:/tmp 
