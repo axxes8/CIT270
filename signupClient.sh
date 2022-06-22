@@ -1,0 +1,1 @@
+curl -d "@signupClient.json" -X POST -H "Content-Type:application/json" https://taylorfrisby-cit270.com:3000/signup
