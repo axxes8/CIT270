@@ -1,0 +1,1 @@
+curl -d "@signupClient.json" -X POST -H "Content-Type:application/json" https://taylorfrisby-nodejs.cit270.com/signup
