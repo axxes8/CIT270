@@ -13,7 +13,7 @@ const redisClient = createClient(
             port: 6379,
             host: '127.0.0.1'
         },
-        url: 'redis://default:P@ssword@10.128.0.2:6379',
+        url: 'redis://default:P@ssword@35.192.88.164:6379',
     }
 );
 
