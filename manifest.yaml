@@ -12,9 +12,9 @@ spec:
       labels:
         app: taylor-cit270
     spec:
-      container:
+      containers:
         - name: taylor-cit270
-          image: scmurdock/cit270
+          image: axxes8/cit270
           command: ["npm"]
           args: ["run","start"]
           ports:
