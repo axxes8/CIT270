@@ -1,0 +1,22 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+Metadata:
+  name: taylor-cit270-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
+spec:
+  tls:
+  - hosts:
+    - taylor.cit270.com
+    secretName: taylor-cit270-tls
+  rules:
+    - host: taylor.cit270.com
+      http:
+        paths:
+        - backend:
+          serviceName: taylor-cit270-loadbalancer
+          servicePort: 80
